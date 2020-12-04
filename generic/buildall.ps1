@@ -22,14 +22,16 @@ $servercoretags
 
 $basetags = (get-navcontainerimagetags -imageName "mcr.microsoft.com/dotnet/framework/runtime").tags | 
     Where-Object { $_.StartsWith('4.8-20') } | 
-    Sort-Object -Descending | 
-    Where-Object { -not $_ -notlike "-1803" }
+    Sort-Object -Descending
 
 $basetags
 
+
 #throw "go?"
 
-0..($basetags.count-1) | % {
+$start = $basetags.IndexOf('4.8-20190418-windowsservercore-ltsc2016')
+$start = 0
+$start..($basetags.count-1) | % {
     $tag = $basetags[$_]
     $dt = $tag.SubString(4,8)
     $os = $tag.SubString($tag.LastIndexOf('-')+1)

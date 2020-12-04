@@ -1,4 +1,5 @@
 ﻿$RootPath = $PSScriptRoot
+$ErrorActionPreference = "Stop"
 
 . (Join-Path $RootPath "settings.ps1")
 
@@ -11,105 +12,97 @@ function Head($text) {
     Write-Host -ForegroundColor Yellow $s
 }
 
-$baseTagVersion = "0.1.0.13"
-
 $testImages = $false
 
 $pushto = @()
-$pushto = @("dev")
 $pushto = @("prod")
-$pushto = @("dev","prod")
 
 $tags = @(
-"10.0.14393.2906-generic-$baseTagVersion"
-"10.0.17763.437-generic-$baseTagVersion"
-"10.0.18362.116-generic-$baseTagVersion"
+"10.0.14393.2906-0.1.0.25"
+"10.0.14393.2972-0.1.0.25"
+"10.0.14393.3025-0.1.0.25"
+"10.0.14393.3085-0.1.0.25"
+"10.0.14393.3144-0.1.0.25"
+"10.0.14393.3204-0.1.0.25"
+"10.0.14393.3326-0.1.0.25"
+"10.0.14393.3384-0.1.0.25"
+"10.0.14393.3443-0.1.0.25"
+"10.0.14393.3630-0.1.0.25"
+"10.0.14393.3750-0.1.0.25"
+"10.0.14393.3808-0.1.0.25"
+"10.0.14393.3866-0.1.0.25"
+"10.0.14393.3930-0.1.0.25"
+"10.0.14393.3986-0.1.0.25"
+"10.0.14393.4046-0.1.0.25"
+"10.0.17134.1006-0.1.0.25"
+"10.0.17134.1130-0.1.0.25"
+"10.0.17134.706-0.1.0.25"
+"10.0.17134.766-0.1.0.25"
+"10.0.17134.829-0.1.0.25"
+"10.0.17134.885-0.1.0.25"
+"10.0.17134.950-0.1.0.25"
+"10.0.17763.1158-0.1.0.25"
+"10.0.17763.1282-0.1.0.25"
+"10.0.17763.1339-0.1.0.25"
+"10.0.17763.1397-0.1.0.25"
+"10.0.17763.1457-0.1.0.25"
+"10.0.17763.1518-0.1.0.25"
+"10.0.17763.1577-0.1.0.25"
+"10.0.17763.437-0.1.0.25"
+"10.0.17763.504-0.1.0.25"
+"10.0.17763.557-0.1.0.25"
+"10.0.17763.615-0.1.0.25"
+"10.0.17763.678-0.1.0.25"
+"10.0.17763.737-0.1.0.25"
+"10.0.17763.864-0.1.0.25"
+"10.0.17763.914-0.1.0.25"
+"10.0.17763.973-0.1.0.25"
+"10.0.18362.1016-0.1.0.25"
+"10.0.18362.1082-0.1.0.25"
+"10.0.18362.1139-0.1.0.25"
+"10.0.18362.116-0.1.0.25"
+"10.0.18362.1198-0.1.0.25"
+"10.0.18362.175-0.1.0.25"
+"10.0.18362.239-0.1.0.25"
+"10.0.18362.295-0.1.0.25"
+"10.0.18362.356-0.1.0.25"
+"10.0.18362.476-0.1.0.25"
+"10.0.18362.535-0.1.0.25"
+"10.0.18362.592-0.1.0.25"
+"10.0.18362.658-0.1.0.25"
+"10.0.18362.778-0.1.0.25"
+"10.0.18362.900-0.1.0.25"
+"10.0.18362.959-0.1.0.25"
+"10.0.18363.1016-0.1.0.25"
+"10.0.18363.1082-0.1.0.25"
+"10.0.18363.1139-0.1.0.25"
+"10.0.18363.1198-0.1.0.25"
+"10.0.18363.476-0.1.0.25"
+"10.0.18363.535-0.1.0.25"
+"10.0.18363.592-0.1.0.25"
+"10.0.18363.658-0.1.0.25"
+"10.0.18363.778-0.1.0.25"
+"10.0.18363.900-0.1.0.25"
+"10.0.18363.959-0.1.0.25"
+"10.0.19041.329-0.1.0.25"
+"10.0.19041.388-0.1.0.25"
+"10.0.19041.450-0.1.0.25"
+"10.0.19041.508-0.1.0.25"
+"10.0.19041.572-0.1.0.25"
+"10.0.19041.630-0.1.0.25"
+"10.0.19042.572-0.1.0.25"
+"10.0.19042.630-0.1.0.25"
 
-"10.0.14393.2972-generic-$baseTagVersion"
-"10.0.17763.504-generic-$baseTagVersion"
-"10.0.18362.175-generic-$baseTagVersion"
-
-"10.0.14393.3025-generic-$baseTagVersion"
-"10.0.17763.557-generic-$baseTagVersion"
-"10.0.18362.239-generic-$baseTagVersion"
-
-"10.0.14393.3085-generic-$baseTagVersion"
-"10.0.17763.615-generic-$baseTagVersion"
-"10.0.18362.295-generic-$baseTagVersion"
-
-"10.0.14393.3144-generic-$baseTagVersion"
-"10.0.17763.678-generic-$baseTagVersion"
-"10.0.18362.356-generic-$baseTagVersion"
-
-"10.0.14393.3204-generic-$baseTagVersion"
-"10.0.17763.737-generic-$baseTagVersion"
-"10.0.18362.476-generic-$baseTagVersion"
-"10.0.18363.476-generic-$baseTagVersion"
-
-"10.0.14393.3326-generic-$baseTagVersion"
-"10.0.17763.864-generic-$baseTagVersion"
-"10.0.18362.535-generic-$baseTagVersion"
-"10.0.18363.535-generic-$baseTagVersion"
-
-"10.0.14393.3384-generic-$baseTagVersion"
-"10.0.17763.914-generic-$baseTagVersion"
-"10.0.18362.592-generic-$baseTagVersion"
-"10.0.18363.592-generic-$baseTagVersion"
-
-"10.0.14393.3443-generic-$baseTagVersion"
-"10.0.17763.973-generic-$baseTagVersion"
-"10.0.18362.658-generic-$baseTagVersion"
-"10.0.18363.658-generic-$baseTagVersion"
-
-"10.0.14393.3506-generic-$baseTagVersion"
-"10.0.17763.1040-generic-$baseTagVersion"
-"10.0.18362.720-generic-$baseTagVersion"
-"10.0.18363.720-generic-$baseTagVersion"
-
-"10.0.14393.3630-generic-$baseTagVersion"
-"10.0.17763.1158-generic-$baseTagVersion"
-"10.0.18362.778-generic-$baseTagVersion"
-"10.0.18363.778-generic-$baseTagVersion"
-
-"10.0.14393.3686-generic-$baseTagVersion"
-"10.0.17763.1217-generic-$baseTagVersion"
-"10.0.18362.836-generic-$baseTagVersion"
-"10.0.18363.836-generic-$baseTagVersion"
-"10.0.19041.264-generic-$baseTagVersion"
-
-"10.0.14393.3750-generic-$baseTagVersion"
-"10.0.17763.1282-generic-$baseTagVersion"
-"10.0.18362.900-generic-$baseTagVersion"
-"10.0.18363.900-generic-$baseTagVersion"
-"10.0.19041.329-generic-$baseTagVersion"
-
-"10.0.14393.3808-generic-$baseTagVersion"
-"10.0.17763.1339-generic-$baseTagVersion"
-"10.0.18362.959-generic-$baseTagVersion"
-"10.0.18363.959-generic-$baseTagVersion"
-"10.0.19041.388-generic-$baseTagVersion"
-
-"10.0.14393.3866-generic-0.1.0.14"
-"10.0.17763.1397-generic-0.1.0.14"
-"10.0.18362.1016-generic-0.1.0.14"
-"10.0.18363.1016-generic-0.1.0.14"
-"10.0.19041.450-generic-0.1.0.14"
-
-"10.0.14393.3930-generic-0.1.0.21"
-"10.0.17763.1457-generic-0.1.0.21"
-"10.0.18362.1082-generic-0.1.0.21"
-"10.0.18363.1082-generic-0.1.0.21"
-"10.0.19041.508-generic-0.1.0.21"
 )
 
 [Array]::Reverse($tags)
 
-$oldGenericTag = "0.1.0.21"
+$oldGenericTag = "0.1.0.26"
 $tags | % {
     $tag = $_
     
     $osversion = $tag.Substring(0,$tag.IndexOf('-'))
-    $image = "my:$osversion-generic-$oldGenericTag"
+    $image = "my:$osversion-$oldGenericTag"
 
     docker images --format "{{.Repository}}:{{.Tag}}" | % { 
         if ($_ -eq $image) 
@@ -122,7 +115,7 @@ $tags | % {
 $tags | % {
     $tag = $_
     head $tag
-    $image = "mcr.microsoft.com/dynamicsnav:$tag"
+    $image = "mcr.microsoft.com/businesscentral:$tag"
     docker pull $image
 }
 
@@ -134,12 +127,12 @@ $tags | % {
     head $tag
     
     $isolation = "hyperv"
-    $baseimage = "mcr.microsoft.com/dynamicsnav:$tag"
+    $baseimage = "mcr.microsoft.com/businesscentral:$tag"
     $osversion = $tag.Substring(0,$tag.IndexOf('-'))
 
     docker pull $baseimage
 
-    $image = "my:$osversion-generic-$genericTag"
+    $image = "my:$osversion-$genericTag"
 
     docker images --format "{{.Repository}}:{{.Tag}}" | % { 
         if ($_ -eq $image) 
@@ -150,30 +143,6 @@ $tags | % {
     
     $dockerfile = Join-Path $RootPath "DOCKERFILE.UPDATE"
 
-    if ($baseTagVersion -eq "0.1.0.7") {
-@"
-FROM $baseimage
-
-COPY Run /Run/
-
-RUN . c:\run\helperfunctions.ps1 ; \
-    Start-Service -Name `$SqlBrowserServiceName -ErrorAction Ignore -WarningAction Ignore ; \
-    Start-Service -Name `$SqlWriterServiceName -ErrorAction Ignore -WarningAction Ignore ; \
-    Start-Service -Name `$SqlServiceName -ErrorAction Ignore -WarningAction Ignore ; \
-    SetDatabaseServerCollation -collation "Latin1_General_100_CS_AS" ; \
-    Invoke-WebRequest -Uri 'https://bcartifacts.azureedge.net/prerequisites/rewrite_2.0_rtw_x64.msi' -OutFile rewrite_amd64.msi ; \
-    start-process -Wait -FilePath .\rewrite_amd64.msi -ArgumentList /quiet, /qn, /passive ; \
-    Invoke-WebRequest -Uri 'https://bcartifacts.azureedge.net/prerequisites/OpenXMLSDKv25.msi' -OutFile OpenXMLSDKV25.msi ; \
-    start-process -Wait -FilePath .\OpenXMLSDKV25.msi -ArgumentList /quiet, /qn, /passive ; \
-    Invoke-WebRequest -Uri 'https://bcartifacts.azureedge.net/prerequisites/DotNetCore.1.0.4_1.1.1-WindowsHosting.exe' -OutFile DotNetCore-WindowsHosting.exe ; \
-    start-process -Wait -FilePath .\DotNetCore-WindowsHosting.exe -ArgumentList /quiet ; \
-    Remove-Item -Recurse -Force rewrite_amd64.msi, OpenXMLSDKV25.msi, DotNetCore-WindowsHosting.exe
-
-LABEL tag="$genericTag" \
-      created="$created"
-"@ | Set-Content $dockerfile
-    }
-    elseif ($baseTagVersion -eq "0.1.0.13" -or $baseTagVersion -eq "0.1.0.14") {
 @"
 FROM $baseimage
 
@@ -182,10 +151,6 @@ COPY Run /Run/
 LABEL tag="$genericTag" \
       created="$created"
 "@ | Set-Content $dockerfile
-    }
-    else {
-        throw "dockerfile not defined for $baseTagVersion"
-    }
 
     docker build --isolation=$isolation `
                  --tag $image `
@@ -225,11 +190,9 @@ LABEL tag="$genericTag" \
     }
 
     $newtags = @()
-    if ($pushto.Contains("dev")) {
-        $newtags += @("mcrbusinesscentral.azurecr.io/public/dynamicsnav:$osversion-generic-dev","mcrbusinesscentral.azurecr.io/public/dynamicsnav:$osversion-generic-dev-$genericTag")
-    }
     if ($pushto.Contains("prod")) {
-        $newtags += @("mcrbusinesscentral.azurecr.io/public/dynamicsnav:$osversion-generic","mcrbusinesscentral.azurecr.io/public/dynamicsnav:$osversion-generic-$genericTag")
+        $newtags += @(
+            "mcrbusinesscentral.azurecr.io/public/businesscentral:$osversion-$genericTag")
     }
     $newtags | ForEach-Object {
         Write-Host "Push $_"
